@@ -1,0 +1,25 @@
+env: local
+migrations_path: ./migrations
+app_id: 1
+
+database:
+  host: localhost
+  port: 5432
+  pass: posrtgres
+  user: postgres
+  name: postgres
+  sslmode: disable
+  timeout: 5s
+  delay: 5s
+  attempts: 5
+
+http_server:
+  host: localhost
+  port: 8080
+  timeout: 5s
+  idle_timeout: 60s
+  
+sso_client:
+  address: localhost:9090
+  timeout: 1s
+  retries_count: 5
