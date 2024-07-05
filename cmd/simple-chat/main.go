@@ -12,6 +12,7 @@ import (
 	"simple-chat/internal/handlers/auth"
 	chatHandler "simple-chat/internal/handlers/chat"
 	messageHandler "simple-chat/internal/handlers/message"
+	"simple-chat/internal/lib/logger/sl"
 	mwLogger "simple-chat/internal/lib/middleware"
 	"simple-chat/internal/logger"
 	chat_service "simple-chat/internal/services/chat"
@@ -37,7 +38,7 @@ func main() {
 
 	dbPool, err := postgresql.NewConection(context.TODO(), log, cfg.Database)
 	if err != nil {
-		log.Error("failed connect to database", err)
+		log.Error("failed connect to database", sl.Err(err))
 		os.Exit(1)
 	}
 
@@ -48,7 +49,7 @@ func main() {
 	messageService := message_service.NewMessageServices(log, messageDB, dbPool)
 	ssoClient, err := ssogrpc.NewClient(log, cfg.SSOClient)
 	if err != nil {
-		log.Error("failed to create sso client", err)
+		log.Error("failed to create sso client", sl.Err(err))
 		os.Exit(1)
 	}
 
@@ -75,7 +76,7 @@ func main() {
 	go func() {
 		log.Info("starting server", slog.String("addr", fmt.Sprintf("%s:%d", cfg.HTTPServer.Host, cfg.HTTPServer.Port)))
 		if err := srv.ListenAndServe(); err != nil && err != http.ErrServerClosed {
-			log.Error("failed to listen and serve", err)
+			log.Error("failed to listen and serve", sl.Err(err))
 			os.Exit(1)
 		}
 	}()
