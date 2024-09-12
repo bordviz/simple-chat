@@ -23,6 +23,8 @@ import (
 	"syscall"
 	"time"
 
+	"github.com/go-chi/cors"
+
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
 )
@@ -60,6 +62,16 @@ func main() {
 	router.Use(middleware.URLFormat)
 	router.Use(mwLogger.New(log))
 	log.Info("middleware successfully conected")
+
+	router.Use(cors.Handler(cors.Options{
+		AllowedOrigins:   []string{"https://*", "http://*"},
+		AllowedMethods:   []string{"GET", "POST", "PUT", "PATCH", "DELETE"},
+		AllowedHeaders:   []string{"Accept", "Authorization", "Content-Type", "X-CSRF-Token"},
+		ExposedHeaders:   []string{"Link"},
+		AllowCredentials: true,
+		MaxAge:           300,
+	}))
+	log.Info("cors successfully conected")
 
 	router.Route("/auth", auth.AddAuthHandler(ssoClient, log, cfg.AppID))
 	router.Route("/chat", chatHandler.AddChatHandler(log, chatService, messageService, ssoClient, cfg.AppID))

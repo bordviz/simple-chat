@@ -1,0 +1,102 @@
+version: '3.9'
+
+networks:
+  loki-chat:
+
+services:
+  db:
+    image: postgres:16
+    container_name: db_chat
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_USER: chat-user
+      POSTGRES_PASSWORD: chat1896
+      POSTGRES_DB: Chat
+    volumes:
+      - pgdata:/var/lib/postgresql
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -d postgres -U postgres" ]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    networks:
+      - loki-chat
+
+  go:
+    build:
+      context: .
+    env_file:
+      - .env
+    container_name: chat_app
+    command: ["/auth/docker/app.sh"]
+    ports:
+      - 8080:8080
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - loki-chat
+
+  loki:
+    image: grafana/loki:2.9.10
+    container_name: loki-chat
+
+    ports:
+      - "3100:3100"
+    command: -config.file=/etc/loki/local-config.yaml
+    networks:
+      - loki-chat
+
+  promtail:
+    image: grafana/promtail:2.9.10
+    container_name: promtail-chat
+    volumes:
+      - /var/log:/var/log
+      - ./grafana/promtail.yml:/etc/promtail/promtail.yml
+    command: -config.file=/etc/promtail/promtail.yml
+    networks:
+      - loki-chat
+
+  grafana:
+    container_name: grafana-chat
+    environment:
+      - GF_PATHS_PROVISIONING=/etc/grafana/provisioning
+      - GF_AUTH_ANONYMOUS_ENABLED=false
+      - GF_AUTH_ANONYMOUS_ORG_ROLE=Admin
+      - GF_SECURITY_ADMIN_PASSWORD=chat-root
+      - GF_SECURITY_ADMIN_USER=root
+    entrypoint:
+      - sh
+      - -euc
+      - |
+        mkdir -p /etc/grafana/provisioning/{datasources,dashboards}
+        cat <<EOF > /etc/grafana/provisioning/datasources/ds.yaml
+        apiVersion: 1
+        datasources:
+        - name: Loki
+          type: loki
+          access: proxy 
+          orgId: 1
+          url: http://loki:3100
+          basicAuth: true
+          isDefault: true
+          version: 1
+          editable: false
+        EOF
+        /run.sh
+    image: grafana/grafana:latest
+    volumes:
+      - ./grafana/dashboard.yml:/etc/grafana/provisioning/dashboards/main.yaml
+      - ./grafana/dashboard.json:/etc/grafana/provisioning/dashboards/dashboard.json
+    ports:
+      - "3000:3000"
+    depends_on:
+      - loki
+    networks:
+      - loki-chat
+
+
+volumes:
+  pgdata:
+

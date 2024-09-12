@@ -1,0 +1,306 @@
+{
+	"info": {
+		"_postman_id": "83268400-c544-4929-a091-aa055a4106f4",
+		"name": "Simple Chat",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "23064045"
+	},
+	"item": [
+		{
+			"name": "Register",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"your name\",\n    \"email\": \"example@gmail.com\",\n    \"password\": \"pass\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/auth/register",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"auth",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"example@gmail.com\",\n    \"password\": \"pass\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/auth/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"auth",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Refresh Token",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MjU5ODM0MzcsInZhdWx0X2lkIjoxfQ.OxYmazXSCBUIn96h6z9TTweZwIJ5nLOS3dwtMMN9wlVP-S3agQZ1OOCw1f-JXldk-7zrL7kaamp0rOuO4VIftw",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/auth/refresh_token",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"auth",
+						"refresh_token"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Current User",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MjU5ODM0MzcsInZhdWx0X2lkIjoxfQ.OxYmazXSCBUIn96h6z9TTweZwIJ5nLOS3dwtMMN9wlVP-S3agQZ1OOCw1f-JXldk-7zrL7kaamp0rOuO4VIftw",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/auth/current_user",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"auth",
+						"current_user"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Chat",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MjU5ODM0MzcsInZhdWx0X2lkIjoxfQ.OxYmazXSCBUIn96h6z9TTweZwIJ5nLOS3dwtMMN9wlVP-S3agQZ1OOCw1f-JXldk-7zrL7kaamp0rOuO4VIftw",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"first_user_id\": 1,\n    \"second_user_id\": 2\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/chat/create",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"chat",
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Chat",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MjU5ODM0MzcsInZhdWx0X2lkIjoxfQ.OxYmazXSCBUIn96h6z9TTweZwIJ5nLOS3dwtMMN9wlVP-S3agQZ1OOCw1f-JXldk-7zrL7kaamp0rOuO4VIftw",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/chat/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"chat",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get User Chats",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MjU5ODM0MzcsInZhdWx0X2lkIjoxfQ.OxYmazXSCBUIn96h6z9TTweZwIJ5nLOS3dwtMMN9wlVP-S3agQZ1OOCw1f-JXldk-7zrL7kaamp0rOuO4VIftw",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/chat/list?limit=10&offset=0",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"chat",
+						"list"
+					],
+					"query": [
+						{
+							"key": "limit",
+							"value": "10"
+						},
+						{
+							"key": "offset",
+							"value": "0"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Message",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MjU5ODM0MzcsInZhdWx0X2lkIjoxfQ.OxYmazXSCBUIn96h6z9TTweZwIJ5nLOS3dwtMMN9wlVP-S3agQZ1OOCw1f-JXldk-7zrL7kaamp0rOuO4VIftw",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"chat_id\": 1,\n    \"test\": \"Hello\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/message/create",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"message",
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Message",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MjU5ODM0MzcsInZhdWx0X2lkIjoxfQ.OxYmazXSCBUIn96h6z9TTweZwIJ5nLOS3dwtMMN9wlVP-S3agQZ1OOCw1f-JXldk-7zrL7kaamp0rOuO4VIftw",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/message/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"message",
+						"1"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
